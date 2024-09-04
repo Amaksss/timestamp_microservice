@@ -11,12 +11,13 @@ const PORT = process.env.PORT
 app.get('/api/:date?', (req, res) => {
 
     const date = req.params.date;
-    let dateObject
+    let dateObject;
 
-     //if there is an empty date parameter
+     //if there is an undefined or empty date parameter
 
-     const now = new Date()
-     if (!date || date === "") {
+     
+     if (!date || typeof date === 'undefined' || date === "") {
+        const now = new Date()
          return res.json({
              unix: now.getTime(),
              utc: now.toUTCString()
@@ -34,13 +35,12 @@ app.get('/api/:date?', (req, res) => {
     //use the date obect for conversion
     if (isNaN(dateObject.getTime())) { //checking if it is a valid date
         return res.json({ error: "Invalid Date"})
-    } res.json({ 
+    } 
+    
+    res.json({ 
         unix: dateObject.getTime(),
         utc: dateObject.toUTCString()
-    })
-
-
-   
+    }) 
     
 });
 
